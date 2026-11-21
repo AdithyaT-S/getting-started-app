@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('./persistence');
 const getItems = require('./routes/getItems');
+const getItemsCount = require('./routes/getItemsCount');
 const addItem = require('./routes/addItem');
 const updateItem = require('./routes/updateItem');
 const deleteItem = require('./routes/deleteItem');
@@ -9,6 +10,7 @@ const deleteItem = require('./routes/deleteItem');
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 
+app.get('/items/count', getItemsCount);
 app.get('/items', getItems);
 app.post('/items', addItem);
 app.put('/items/:id', updateItem);

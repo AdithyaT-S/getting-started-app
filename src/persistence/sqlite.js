@@ -93,6 +93,15 @@ async function updateItem(id, item) {
     });
 } 
 
+async function getItemsCount() {
+    return new Promise((acc, rej) => {
+        db.get('SELECT COUNT(*) AS count FROM todo_items', (err, row) => {
+            if (err) return rej(err);
+            acc(row.count);
+        });
+    });
+}
+
 async function removeItem(id) {
     return new Promise((acc, rej) => {
         db.run('DELETE FROM todo_items WHERE id = ?', [id], err => {
@@ -107,6 +116,7 @@ module.exports = {
     teardown,
     getItems,
     getItem,
+    getItemsCount,
     storeItem,
     updateItem,
     removeItem,

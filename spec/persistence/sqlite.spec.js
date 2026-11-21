@@ -63,3 +63,20 @@ test('it can get a single item', async () => {
     const item = await db.getItem(ITEM.id);
     expect(item).toEqual(ITEM);
 });
+
+test('it reports zero items count when the store is empty', async () => {
+    await db.init();
+
+    const count = await db.getItemsCount();
+    expect(count).toBe(0);
+});
+
+test('it reports the items count after items are stored', async () => {
+    await db.init();
+
+    await db.storeItem(ITEM);
+    await db.storeItem(Object.assign({}, ITEM, { id: 'another-id' }));
+
+    const count = await db.getItemsCount();
+    expect(count).toBe(2);
+});

@@ -115,6 +115,15 @@ async function updateItem(id, item) {
     });
 }
 
+async function getItemsCount() {
+    return new Promise((acc, rej) => {
+        pool.query('SELECT COUNT(*) AS count FROM todo_items', (err, rows) => {
+            if (err) return rej(err);
+            acc(rows[0].count);
+        });
+    });
+}
+
 async function removeItem(id) {
     return new Promise((acc, rej) => {
         pool.query('DELETE FROM todo_items WHERE id = ?', [id], err => {
@@ -129,6 +138,7 @@ module.exports = {
     teardown,
     getItems,
     getItem,
+    getItemsCount,
     storeItem,
     updateItem,
     removeItem,
