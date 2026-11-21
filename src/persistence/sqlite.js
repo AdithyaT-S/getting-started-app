@@ -102,6 +102,15 @@ async function removeItem(id) {
     });
 }
 
+async function getItemCount() {
+    return new Promise((acc, rej) => {
+        db.all('SELECT COUNT(*) AS count FROM todo_items', (err, rows) => {
+            if (err) return rej(err);
+            acc(rows[0].count);
+        });
+    });
+}
+
 module.exports = {
     init,
     teardown,
@@ -110,4 +119,5 @@ module.exports = {
     storeItem,
     updateItem,
     removeItem,
+    getItemCount,
 };
